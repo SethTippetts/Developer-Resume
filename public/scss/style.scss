@@ -1,0 +1,270 @@
+
+$prefix: '.';
+$baseFont: 14px;
+
+$mainColor: #90d65c;
+@function strip-units($number) {
+    @return $number / ($number * 0 + 1);
+}
+@function em($px) {
+    @return emOf($px,$baseFont);
+}
+@function emOf($px,$fontSize){
+    @return #{($px/strip-units($fontSize))}em;
+}
+@import "grid-calc"; 
+
+
+.drag, .drag a {
+    -webkit-user-select: initial;
+    -webkit-user-drag: initial;
+    -ms-user-select: initial;
+    user-select: initial;
+    draggable: initial; 
+}
+*, :before, :after {
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -ms-user-select: none;
+    user-select: none;
+    draggable: none; 
+}
+html {
+    font-size: $baseFont;
+    line-height: 1.4em;
+    font-family: 'Roboto', sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased; 
+}
+body {
+    -webkit-transition: background-image 500ms ease-in-out;
+    -moz-transition: background-image 500ms ease-in-out;
+    -o-transition: background-image 500ms ease-in-out;
+    -ms-transition: background-image 500ms ease-in-out;
+    transition: background-image 500ms ease-in-out; 
+    margin: 0;
+    background-color: #000;
+    background-image: url(/img/blank.gif);
+    background-size: 1600px 1192px;
+    background-position: 50% 0;
+    background-repeat: no-repeat;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased; 
+    @media (min-width: 768px){
+        background-attachment: fixed;
+    }
+}
+
+a {
+    color: darken($mainColor,25%);
+    text-decoration: none;
+    &:hover {
+        color: $mainColor;
+        text-decoration: underline;
+    }
+}
+#nav {
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0)));
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%);
+    background: -o-linear-gradient(top,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%);
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(to bottom,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#00000000',GradientType=0 );
+}
+#bodyContent {
+    float: left;
+}
+#bodyContent {
+    background-color: rgba(255,255,255,0.9);
+    padding: em(15);
+}
+.p {
+    padding: em(15);
+}
+.m {
+    margin: em(15);
+}
+.ml {
+    margin-left: em(15);
+}
+.no-p {
+    padding: 0 !important;
+}
+.no-m {
+    margin: 0 !important;
+}
+.no-mt {
+    margin-top: 0 !important;
+}
+.no-mb {
+    margin-bottom: 0 !important;
+}
+[data-stellar-ratio] {
+    position: relative;
+}
+.c {
+    clear: both;
+}
+h1, h2, h3, h4, h5, h6 {
+    @extend .grid-full;
+    line-height: 1.2em;
+}
+h1 {
+    font-size: em(50);
+}
+h2 {
+    font-size: em(40);
+}
+h3 {
+    font-size: em(30);
+}
+h4 {
+    font-size: em(20);
+}
+h5 {
+    font-size: em(16);
+    color: lighten(#000,50%);
+}
+h6 {
+    font-size: em(14);
+    color: lighten(#000,50%);
+}
+.tr {
+    text-align: right;
+}
+.fl {
+    float: left;
+}
+p {
+    @extend .grid-full;
+    margin-bottom: 0;
+}
+.textWhite {
+    color: #fff !important;
+}
+.ts {
+    text-shadow: 1px 1px 2px #000;
+}
+@mixin randomColors($index: 1, $count: 4){
+    $index: $index + 1;
+    background-color: hsl((170/$count) * $index,60%,60%);
+}
+#languages, #programs { 
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    float: left;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    > li {
+        padding: em(15);
+        margin-bottom: em(5);
+        color: #fff;
+        list-style-type: none;
+        width: 33%;
+        $randomCounter: 9;
+        @while $randomCounter>0 {
+            &:nth-child(#{$randomCounter}) {
+                @include randomColors($randomCounter, 9);
+                $randomCounter: $randomCounter - 1;
+            }
+        }
+
+        &:after {
+            float: right;
+            font-size: 0.75em;
+        }
+        &.advanced {
+            width: 66%;
+            &:after {
+                content: "Advanced";
+            }
+        }
+        &.proficient {
+            width: 100%;
+            &:after {
+                content: "Expert";
+            }
+        }
+    }
+}
+@media (min-width: 980px) {
+    .no-desktop {
+        display: none !important;
+    }
+}
+.profile {
+    max-width: 250px;
+    max-height: 250px;
+}
+.contact {
+    padding: 0;
+    li {
+        list-style-type: none;
+        margin-bottom: $space/4;
+
+        &.cPhone > a:before {
+            content: "Phone";
+        }
+        &.cEmail > a:before {
+            content: "E-mail";
+        }
+        &.cFacebook > a:before {
+            content: "Facebook";
+        }
+        &.cTwitter > a:before {
+            content: "Twitter";
+        }
+        &.cGooglePlus > a:before {
+            content: "Google+";
+        }
+        > a {
+            background-color: #f0f0f0;
+            border-radius: 0 4px 4px 0;
+            display: block;
+            color: darken($mainColor,25%);
+            max-width: 400px;
+            &:before {
+                @extend .tr;
+                text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+                padding: em(5);
+                background-color: darken($mainColor, 10%);
+                color: #fff;
+                font-weight: bold;
+                border-radius: 4px 0 0 4px;
+                width: 30%;
+                display: inline-block;
+                margin-right: $space/2;
+            }
+            &:hover {
+                background: darken(#f0f0f0,10%);
+                &:before {
+                    background-color: darken($mainColor, 15%);
+                }
+            }
+        }
+    }
+}
+#portfolio {
+    > a {
+        @extend .grid-third, .mobile-full;
+        -webkit-transition: all .2s;
+        -moz-transition: all .2s;
+        -o-transition: all .2s;
+        transition: all .2s;
+        max-width: 320px;
+        &:hover {
+            -webkit-transform: scale(1.05,1.05);
+            -moz-transform: scale(1.05,1.05);
+            -o-transform: scale(1.05,1.05);
+            transform: scale(1.05,1.05);
+        }
+        > img {
+            width: 100%;
+        }
+    }
+}

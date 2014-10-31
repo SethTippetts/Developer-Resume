@@ -1,0 +1,32 @@
+[
+    {
+        "url": "/",
+        "templateUrl": "/html/home.html",
+        "bgClass": "bg-home",
+        "title": "Comedian Steve Soelberg"
+    },
+    {
+        "url": "/bio", 
+        "templateUrl": "/html/bio.html",
+        "bgClass": "bg-bio",
+        "title": "About Steve"
+    },
+    {
+        "url": "/contact",
+        "templateUrl": "/html/contact.html",
+        "bgClass": "bg-contact",
+        "title": "Book Steve"
+    },
+    {
+        "url": "/videos",
+        "templateUrl": "/html/videos.html",
+        "bgClass": "bg-media",
+        "title": "Videos of Steve Soelberg"
+    },
+    {
+        "url": "/calendar",
+        "templateUrl": "/html/calendar.html",
+        "bgClass": "bg-calendar",
+        "title": "See an upcoming performance of Steve"
+    }
+]

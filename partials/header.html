@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+    <head>
+        <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta name="format-detection" content="telephone=no">
+        <title>Seth Tippetts</title>
+        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+        <link href='css/style.css' rel='stylesheet' type='text/css'>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+        <script src="js/stellar.js"></script>
+        <script>
+            $(function(){
+                var img = new Image();
+                img.src = '/img/bg1.jpg';
+                setTimeout(function(){
+                    $('body').css({backgroundImage: 'url(/img/bg1.jpg)'});
+                },1000);
+                if($(window).width()>768){
+                    $.stellar({
+                        horizontalScrolling:false,
+                        horizontalOffset:100
+                    });
+                }
+            });
+        </script>
+    </head>
+    <body data-stellar-background-ratio="0.25">
+        <nav id="nav" class="flush-5 no-tablet tr p">
+            <h1 class="no-mb textWhite ts">Seth Tippetts</h1>
+            <h4 class="no-mt textWhite ts">Java Engineer</h4>
+        </nav>
+        <div id="bodyContent" class="flush-15 tablet-full">
