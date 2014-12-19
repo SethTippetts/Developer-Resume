@@ -1,7 +1,7 @@
 var app = angular.module('app', ['ngRoute'])
     .config(['$routeProvider', '$locationProvider',
         function($routeProvider, $locationProvider) {
-            angular.forEach(<@&routes@>, function(route) {
+            angular.forEach(<<&routes>>, function(route) {
                 var url = route.url;
                 delete route.url;
                 $routeProvider.when(url, route);
