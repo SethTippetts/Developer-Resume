@@ -79,7 +79,7 @@ $flushCount: 20;
     @extend #{$prefix}flush-4;
 }
 
-@media (min-width: 1200px) {
+@media screen and (min-width: 1200px) {
     html {
         font-size: 16px !important;
     }
@@ -88,7 +88,7 @@ $flushCount: 20;
     }
     @include grid('large',true);
 }
-@media (min-width:980px) {
+@media screen and (min-width:980px) {
     #{$prefix}no-desktop {
         display: none !important;
     }
@@ -103,7 +103,7 @@ $flushCount: 20;
     }
     @include grid('tablet',true);
 }
-@media (max-width: 767px) {
+@media screen and (max-width: 767px) {
     html {
         font-size: 10px !important;
     }
