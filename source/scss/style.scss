@@ -48,7 +48,7 @@ body {
     transition: background-image 500ms ease-in-out; 
     margin: 0;
     background-color: #000;
-    background-image: url(/img/blank.gif);
+    background-image: url(/img/bg1.jpg);
     background-size: 1600px 1192px;
     background-position: 50% 0;
     background-repeat: no-repeat;
@@ -155,7 +155,7 @@ p {
     background-color: hsl((170/$count) * $index,60%,60%);
 }
 #languages, #programs { 
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    // text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
     float: left;
     width: 100%;
     padding: 0;
@@ -163,7 +163,7 @@ p {
     > li {
         padding: em(15);
         margin-bottom: em(5);
-        color: #fff;
+        color: #222;
         list-style-type: none;
         width: 33%;
         $randomCounter: 9;
