@@ -9,6 +9,7 @@ import runSequence from 'run-sequence';
 import useref from 'gulp-useref';
 import { sync as del } from 'rimraf';
 import livereload from 'gulp-livereload';
+import gzip from 'gulp-gzip';
 
 import pkg from './package.json';
 
@@ -79,6 +80,8 @@ function revision() {
   });
   return gulp.src(sources.all, { cwd: tmp })
     .pipe(revAll.revision())
+    .pipe(gulp.dest(dest))
+    .pipe(gzip())
     .pipe(gulp.dest(dest));
 }
 
