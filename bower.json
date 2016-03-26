@@ -1,0 +1,22 @@
+{
+  "name": "resume.sethtippetts.com",
+  "description": "Official resume for software engineer Seth Tippetts",
+  "main": "index.html",
+  "authors": [
+    "Seth Tippetts <sethtippetts@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/SethTippetts/Developer-Resume",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.5.0"
+  }
+}

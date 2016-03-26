@@ -1,62 +1,124 @@
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
 import header from 'gulp-header';
-import sass from 'gulp-sass';
+import livereload from 'gulp-livereload';
 import minifyCSS from 'gulp-minify-css';
 import path from 'path';
 import RevAll from 'gulp-rev-all';
-import runSequence from 'run-sequence';
-import useref from 'gulp-useref';
-import { sync as del } from 'rimraf';
-import livereload from 'gulp-livereload';
 import gzip from 'gulp-gzip';
-
+import runSequence from 'run-sequence';
+import sass from 'gulp-sass';
+import useref, { assets as userefAssets } from 'gulp-useref';
+import webserver from 'gulp-webserver';
+import { sync as del } from 'rimraf';
 import pkg from './package.json';
 
+
 let dest = 'public', cwd = 'source', tmp = 'tmp';
-let sources = {
-  all: ['**/*'],
-  scripts: ['**/*.js'],
-  documents: ['**/*.html'],
-  images: ['**/*.png', '**/*.jpg', '**/*.svg'],
-  fonts: ['**/*.eot', '**/*.ttf', '**/*.woff', '**/*.woff2', '**/*.otf'],
-  sass: ['**/*.sass', '**/*.scss'],
-  styles: ['**/*.css'],
+
+let defaultCompile = (src, dest, cwd) => {
+  return gulp.src(src, { cwd })
+    .pipe(gulp.dest(dest));
 };
 
-gulp.task('default', [ 'watch' ]);
-gulp.task('start', ['build']);
-gulp.task('compile', ['images', 'styles', 'scripts', 'documents', 'fonts']);
+let tasks = [
+  {
+    name: 'scripts',
+    src: ['**/*.js'],
+  },
+  {
+    name: 'documents',
+    src: ['**/*.html'],
+  },
+  {
+    name: 'images',
+    src: ['**/*.png', '**/*.jpg', '**/*.svg', '**/*.gif'],
+  },
+  {
+    name: 'fonts',
+    src: ['**/*.eot', '**/*.ttf', '**/*.woff', '**/*.woff2', '**/*.otf'],
+  },
+  {
+    name: 'styles',
+    src: ['**/*.css'],
+  },
+  {
+    name: 'sass',
+    src: ['**/*.sass', '**/*.scss'],
+    compile: (src, dest, cwd) => {
+      return gulp.src(src, { cwd })
+        .pipe(sass())
+        .pipe(gulp.dest(dest));
+    }
+  },
+];
 
-gulp.task('build', () => {
-  return runSequence('clean', 'compile', 'reference', 'revision', 'cleanup')
-});
-gulp.task('build:dev', () => {
-  return runSequence('compile', 'development', 'cleanup');
+tasks.map(task => {
+  task.compile = task.compile || defaultCompile;
+  return task;
 });
 
-// Cleanup
+gulp.task('server', () => {
+  gulp.src('public')
+    .pipe(webserver({
+      port: 3000,
+      livereload: true,
+    }));
+})
+
+gulp.task('default', ['watch', 'server']);
+
 gulp.task('clean', () => del(dest));
 gulp.task('cleanup', () => del(tmp));
-
-// Assets
-gulp.task('styles', styles);
-gulp.task('scripts', scripts);
-gulp.task('images', images);
-gulp.task('fonts', fonts);
-gulp.task('documents', documents);
 
 // Prod only version management
 gulp.task('revision', revision);
 gulp.task('reference', reference);
 
-// Dev commands
-gulp.task('work', ['watch']);
-gulp.task('watch', ['build:dev'], watch);
-gulp.task('development', development);
+gulp.task('build', () => {
+  return runSequence('clean', 'assets', 'reference', 'revision', 'cleanup')
+});
+
+let assetKeys = tasks
+  .map(task => {
+    let { name, src, compile } = task;
+    gulp.task(name, compile.bind(this, src, tmp, cwd));
+    gulp.task(devKey(name), () => {
+      return compile(src, dest, cwd)
+        //.pipe(livereload());
+    });
+    return name;
+  });
+
+gulp.task('assets', assetKeys)
+gulp.task('assets:dev', assetKeys.map(devKey));
+
+gulp.task('watch', ['assets:dev'], () => {
+  //livereload.listen();
+  tasks
+    .map(task => {
+      let { name, src } = task;
+      src = src.map(src => prefix('source', src));
+      gulp.watch(src, [devKey(name)], { cwd })
+    });
+});
+
+function prefix(pre, str) {
+  if (str.charAt(0) === '!') return str;
+  return `${pre}/${str}`;
+}
+
+function devKey(key) {
+  return `${key}:dev`;
+}
+
+let sources = tasks.reduce((prev, { name, src }) => {
+  prev[name] = src;
+  return prev;
+}, {});
 
 function reference() {
-  let assets = useref.assets();
+  let assets = userefAssets();
   let htmlComment = header('<!-- ' + pkg.name + ' v' + pkg.version + ' -->\n\n');
   let scriptComment = header('/* ' + pkg.name + ' v' + pkg.version + ' */\n\n');
   return gulp.src('tmp/**/*.html')
@@ -71,55 +133,16 @@ function reference() {
 
 function revision() {
   let revAll = new RevAll({
-    dontRenameFile: [/\.html$/],
+    dontRenameFile: [/index\.html$/],
     dontSearchFile: [/vendor/, /jpg$/, /png$/],
     transformFilename: function (file, hash) {
       var ext = path.extname(file.path);
       return path.basename(file.path, ext) + '-' + hash.substr(0, 10) + ext; // 3410c.filename.ext
     }
   });
-  return gulp.src(sources.all, { cwd: tmp })
+  return gulp.src('**/*', { cwd: tmp })
     .pipe(revAll.revision())
     .pipe(gulp.dest(dest))
     .pipe(gzip())
     .pipe(gulp.dest(dest));
 }
-
-function development() {
-  return gulp.src(sources.all, { cwd: tmp })
-    .pipe(gulp.dest(dest))
-    .pipe(livereload());
-}
-
-function watch() {
-  livereload.listen();
-  gulp.watch('source/**/*', ['build:dev']);
-}
-
-// Asset compilation
-function styles() {
-  return gulp.src(sources.sass.concat(sources.styles), { cwd })
-    .pipe(gulpif(sources.sass, sass()))
-    .pipe(gulp.dest(tmp));
-}
-
-function scripts() {
-  return gulp.src(sources.scripts, { cwd })
-    .pipe(gulp.dest(tmp));
-}
-
-function images() {
-  return gulp.src(sources.images, { cwd })
-    .pipe(gulp.dest(tmp));
-}
-
-function fonts() {
-  return gulp.src(sources.fonts, { cwd })
-    .pipe(gulp.dest(tmp));
-}
-
-function documents() {
-  return gulp.src(sources.documents, { cwd })
-    .pipe(gulp.dest(tmp));
-}
-
