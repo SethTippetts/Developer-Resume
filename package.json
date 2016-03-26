@@ -6,15 +6,17 @@
   "scripts": {
     "start": "gulp watch",
     "watch": "gulp watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gulp build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "bower i"
   },
   "author": "Seth Tippetts <sethtippetts@gmail.com> (http://sethtippetts.com)",
   "license": "ISC",
-  "dependencies": {
-    "gulp": "^3.9.1",
-    "gulp-webserver": "^0.9.1"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "gulp-rev-all": "^0.8.24"
+    "bower": "^1.7.7",
+    "gulp": "^3.9.1",
+    "gulp-rev-all": "^0.8.24",
+    "gulp-webserver": "^0.9.1"
   }
 }
