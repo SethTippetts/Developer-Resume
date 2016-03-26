@@ -1,0 +1,23 @@
+{
+  "name": "kualiresume.sethtippetts.com",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Seth Tippetts <sethtippetts@gmail.com> (http://sethtippetts.com)"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.5.0"
+  }
+}
