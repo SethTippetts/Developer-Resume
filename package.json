@@ -1,34 +1,20 @@
 {
-  "name": "sethr",
-  "version": "0.0.1",
+  "name": "resume.sethtippetts.com",
+  "version": "1.0.0",
   "description": "",
-  "main": "Gruntfile.js",
+  "main": "index.js",
   "scripts": {
-    "build": "gulp build",
-    "watch": "gulp",
+    "start": "gulp watch",
+    "watch": "gulp watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://SethTippetts@bitbucket.org/SethTippetts/seths-resume.git"
-  },
-  "author": "",
+  "author": "Seth Tippetts <sethtippetts@gmail.com> (http://sethtippetts.com)",
   "license": "ISC",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-webserver": "^0.9.1"
+  },
   "devDependencies": {
-    "babel-core": "^5.8.33",
-    "bower": "^1.7.7",
-    "eslint": "^1.6.0",
-    "gulp": "^3.9.0",
-    "gulp-gzip": "^1.2.0",
-    "gulp-header": "^1.7.1",
-    "gulp-if": "^2.0.0",
-    "gulp-livereload": "^3.8.1",
-    "gulp-minify-css": "^1.2.1",
-    "gulp-rev-all": "^0.8.22",
-    "gulp-sass": "^2.1.0",
-    "gulp-useref": "^2.0.1",
-    "gulp-webserver": "^0.9.1",
-    "rimraf": "^2.4.3",
-    "run-sequence": "^1.1.4"
+    "gulp-rev-all": "^0.8.24"
   }
 }

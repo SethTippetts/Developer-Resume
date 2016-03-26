@@ -1,0 +1,27 @@
+.resume-hero {
+  background-image: url(/images/resume-hero2.jpg);
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-color: #fff;
+  height: 400px;
+}
+.resume-hero_content {
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 5px;
+  display: inline-block;
+  float: left;
+  padding: 20px;
+}
+@media (max-width: 768px) {
+  .resume-hero {
+    height: auto;
+  }
+  .resume-hero_content {
+    display: block;
+    text-align: center;
+    float: none;
+  }
+}
+.text-center {
+  text-align: center;
+}
